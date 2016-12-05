@@ -12,6 +12,7 @@ using Microsoft.Xrm.Tooling.Connector;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
 using QuieroCasa.InterfacesCRM.Data.Entities;
+using System.Collections;
 
 namespace QuieroCasa.InterfacesCRM.Business.Logic
 {
@@ -19,36 +20,20 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
     {
         OrganizationServiceProxy _serviceProxy;
 
-        public ResponseIncomingCall SearchByCallerId(string callerId)
+        public List<ContactDTO> SearchByCallerId(OrganizationServiceProxy organizationServiceProxy, string callerId)
         {
             try
             {
-                ResponseIncomingCall response = new ResponseIncomingCall();
-                string connectionString = ConfigurationManager.ConnectionStrings["CRMOnline"].ConnectionString;
-                CrmServiceClient serverConfig = new CrmServiceClient(connectionString);
+                List<ContactDTO> listContacts = new List<ContactDTO>();
 
-                if (!serverConfig.IsReady)
+                using (_serviceProxy = organizationServiceProxy)
                 {
-                    throw new Exception("Request Connection Error: " + serverConfig.LastCrmError, serverConfig.LastCrmException);
-                }
-
-                // Connect to the Organization service. 
-                // The using statement assures that the service proxy will be properly disposed.
-                using (_serviceProxy = serverConfig.OrganizationServiceProxy)
-                {
-                    // This statement is required to enable early-bound type support.
                     _serviceProxy.EnableProxyTypes();
-
-                    Guid userid = ((WhoAmIResponse)_serviceProxy.Execute(new WhoAmIRequest())).UserId;
-                    SystemUser systemUser = (SystemUser)_serviceProxy.Retrieve("systemuser", userid, new ColumnSet(new string[] { "firstname", "lastname" }));
-                    response.firstname = systemUser.FirstName;
-                    response.lastname = systemUser.LastName;
-                    List<Contact> listContacts = new List<Contact>();
-
+                    
                     QueryExpression sdkContactsQuery = new QueryExpression
                     {
                         EntityName = Contact.EntityLogicalName,
-                        ColumnSet = new ColumnSet("accountid", "contactid", "emailaddress1", "fullname"),
+                        ColumnSet = new ColumnSet("accountid", "contactid", "emailaddress1", "fullname", "parentcustomerid"),
                         Criteria = new FilterExpression()
                         {
                             FilterOperator = LogicalOperator.Or,
@@ -68,11 +53,21 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
 
                     foreach (Entity entity in contacts.Entities)
                     {
-                        listContacts.Add((Contact)entity);
+                        Contact contact = entity.ToEntity<Contact>();
+
+                        listContacts.Add(new ContactDTO()
+                        {
+                            accountid = contact.Attributes.Contains("accountid") ? ((EntityReference)contact.Attributes["accountid"]) : null,
+                            contactid = contact.Attributes.Contains("contactid") ? contact.Attributes["contactid"].ToString() : string.Empty,
+                            emailaddress1 = contact.Attributes.Contains("emailaddress1") ? contact.Attributes["emailaddress1"].ToString() : string.Empty,
+                            fullname = contact.Attributes.Contains("fullname") ? contact.Attributes["fullname"].ToString() : string.Empty,
+                            customerId = contact.Attributes.Contains("parentcustomerid") ? ((EntityReference)contact.Attributes["parentcustomerid"]) : null,
+                        });
+
                     }
                 }
 
-                return response;
+                return listContacts;
             }
             catch (Exception ex)
             {

@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xrm.Sdk, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Referenced Assemblies\Microsoft.Xrm.Sdk.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\QuieroCasa.DynamicsCRM.Framework\QuieroCasa.DynamicsCRM.Framework.csproj">
+      <Project>{072b646a-f15a-4790-9226-bf65cfde9dd9}</Project>
+      <Name>QuieroCasa.DynamicsCRM.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuieroCasa.InterfacesCRM.Business.Contracts\QuieroCasa.InterfacesCRM.Business.Contracts.csproj">
       <Project>{8c63e41d-7be5-4467-978c-340dbca7b41d}</Project>
       <Name>QuieroCasa.InterfacesCRM.Business.Contracts</Name>
