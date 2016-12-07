@@ -29,7 +29,7 @@ namespace QuieroCasa.InterfacesCRM.Data.Entities
     }
     public enum Department
     {
-        Ventas = 1,
+        Ventas = 960760000,
         Asesorias = 2,
         Encuestas = 3
     }

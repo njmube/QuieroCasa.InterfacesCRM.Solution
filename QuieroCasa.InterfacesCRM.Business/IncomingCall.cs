@@ -27,8 +27,15 @@ namespace QuieroCasa.InterfacesCRM.Business
                 if (response.ListContacts.Count == 1)
                 {
                     ContactDTO contact = response.ListContacts.First();
-                    response.caseId = incidents.Add(organization, "Caso Nimbus" + " " + DateTime.Now.ToString(), (int)PriorityCode.Alta, (int)CaseOriginCode.Telefono, (int)CaseTypeCode.Pregunta, "Caso de prueba", contact.customerId, (int) Department.Ventas, dateTimeStart);
+                    response.caseId = incidents.Add(organization, "Caso Nimbus" + " " + DateTime.Now.ToString(), (int)PriorityCode.Alta, (int)CaseOriginCode.Telefono, (int)CaseTypeCode.Pregunta, "Caso de prueba", contact.parentcustomerid, contact.contactid, (int)Department.Ventas, dateTimeStart);
                     response.contactId = contact.contactid;
+                }
+                else
+                     if (response.ListContacts.Count == 0)
+                {
+                    string contactId = contacts.Add(organization, callerId);
+                    response.caseId = incidents.Add(organization, "Caso Nimbus" + " " + DateTime.Now.ToString(), (int)PriorityCode.Alta, (int)CaseOriginCode.Telefono, (int)CaseTypeCode.Pregunta, "Caso de prueba", null, contactId, (int)Department.Ventas, dateTimeStart);
+                    response.contactId = contactId;
                 }
 
                 return response;

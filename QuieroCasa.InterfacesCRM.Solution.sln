@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Referenced Assemblies", "Re
 		Referenced Assemblies\Microsoft.IdentityModel.Clients.ActiveDirectory.dll = Referenced Assemblies\Microsoft.IdentityModel.Clients.ActiveDirectory.dll
 		Referenced Assemblies\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll = Referenced Assemblies\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll
 		Referenced Assemblies\Microsoft.IdentityModel.dll = Referenced Assemblies\Microsoft.IdentityModel.dll
+		Referenced Assemblies\Microsoft.Xrm.Sdk.Deployment.dll = Referenced Assemblies\Microsoft.Xrm.Sdk.Deployment.dll
 		Referenced Assemblies\Microsoft.Xrm.Sdk.dll = Referenced Assemblies\Microsoft.Xrm.Sdk.dll
 		Referenced Assemblies\Microsoft.Xrm.Tooling.Connector.dll = Referenced Assemblies\Microsoft.Xrm.Tooling.Connector.dll
 	EndProjectSection
@@ -32,6 +33,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.DynamicsCRM.Framework", "QuieroCasa.DynamicsCRM.Framework\QuieroCasa.DynamicsCRM.Framework.csproj", "{072B646A-F15A-4790-9226-BF65CFDE9DD9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.InterfacesCRM.Business.Logic", "QuieroCasa.InterfacesCRM.Business.Logic\QuieroCasa.InterfacesCRM.Business.Logic.csproj", "{0A8A4F4E-4E43-4023-B5CF-D6AC8D07CAE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.InterfacesCR.Business.Commons", "QuieroCasa.InterfacesCR.Business.Commons\QuieroCasa.InterfacesCR.Business.Commons.csproj", "{380AC376-4F74-4673-86CD-82D70C400190}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +66,10 @@ Global
 		{0A8A4F4E-4E43-4023-B5CF-D6AC8D07CAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A8A4F4E-4E43-4023-B5CF-D6AC8D07CAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A8A4F4E-4E43-4023-B5CF-D6AC8D07CAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{380AC376-4F74-4673-86CD-82D70C400190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{380AC376-4F74-4673-86CD-82D70C400190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{380AC376-4F74-4673-86CD-82D70C400190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{380AC376-4F74-4673-86CD-82D70C400190}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,5 +81,6 @@ Global
 		{A4986FF5-F6DF-40D0-B107-A283F5C11C36} = {FE30F29D-010E-480F-A476-FEE640053EA2}
 		{072B646A-F15A-4790-9226-BF65CFDE9DD9} = {A8324D45-3692-4C82-92AA-C7C5E5AE5C4E}
 		{0A8A4F4E-4E43-4023-B5CF-D6AC8D07CAE2} = {BCE7DA5A-7D81-425D-A1C0-87E85E4E73B6}
+		{380AC376-4F74-4673-86CD-82D70C400190} = {BCE7DA5A-7D81-425D-A1C0-87E85E4E73B6}
 	EndGlobalSection
 EndGlobal

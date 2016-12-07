@@ -13,6 +13,9 @@ namespace QuieroCasa.InterfacesCRM.Data.Entities
         public string contactid { get; set; }
         public string emailaddress1 { get; set; }
         public string fullname { get; set; }
-        public EntityReference customerId { get; set; }
+        public EntityReference parentcustomerid { get; set; }
+        public EntityReference parentcontactid { get; set; }
+        
+
     }
 }

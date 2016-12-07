@@ -20,7 +20,7 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
     {
         OrganizationServiceProxy _serviceProxy;
 
-        public string Add(OrganizationServiceProxy organizationServiceProxy, string title, int priorityCode, int caseOriginCode, int caseTypeCode, string description, EntityReference customerId, int departamentoCode, DateTime dateTimeStart)
+        public string Add(OrganizationServiceProxy organizationServiceProxy, string title, int priorityCode, int caseOriginCode, int caseTypeCode, string description, EntityReference parentcustomerid, string contactId, int departamentoCode, DateTime dateTimeStart)
         {
             try
             {
@@ -37,9 +37,9 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
                         CaseOriginCode = new OptionSetValue(caseOriginCode),
                         CaseTypeCode = new OptionSetValue(caseTypeCode),
                         Description = description,
-                        CustomerId = customerId,
-                        new_departamento = new OptionSetValue(departamentoCode),
-                        new_fechaHoraInicio = dateTimeStart
+                        CustomerId = new EntityReference(Contact.EntityLogicalName, new Guid(contactId)),                        
+                        its_departamento = new OptionSetValue(departamentoCode),
+                        its_fechayhoradeinicio = dateTimeStart
                     };
 
                     Guid incidentId = _serviceProxy.Create(newCase);

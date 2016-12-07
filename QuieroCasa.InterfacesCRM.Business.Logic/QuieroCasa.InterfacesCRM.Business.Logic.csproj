@@ -50,6 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Referenced Assemblies\Microsoft.Xrm.Sdk.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk.Deployment">
+      <HintPath>..\Referenced Assemblies\Microsoft.Xrm.Sdk.Deployment.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xrm.Tooling.Connector">
       <HintPath>..\Referenced Assemblies\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
     </Reference>
