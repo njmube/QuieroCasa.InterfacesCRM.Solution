@@ -17,10 +17,10 @@ namespace QuieroCasa.InterfacesCRM.Services
     public class IncomingCall : System.Web.Services.WebService
     {
         [WebMethod]
-        public ResponseIncomingCall RegisterIncomingCall(string callerId, DateTime dateTimeStart, string url, string guidCase, string urlCase)
+        public ResponseIncomingCall RegisterIncomingCall(string callerId, DateTime dateTimeStart)
         {
             QuieroCasa.InterfacesCRM.Business.IncomingCall call = new QuieroCasa.InterfacesCRM.Business.IncomingCall();
-            return call.RegisterIncomingCall(callerId, dateTimeStart, url, guidCase, url);
+            return call.RegisterIncomingCall(callerId, dateTimeStart);
         }
     }
 }

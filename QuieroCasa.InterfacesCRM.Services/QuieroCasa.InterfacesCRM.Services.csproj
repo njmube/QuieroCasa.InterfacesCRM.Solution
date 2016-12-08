@@ -114,6 +114,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\QuieroCasa.InterfacesCR.Business.Commons\QuieroCasa.InterfacesCRM.Business.Commons.csproj">
+      <Project>{380ac376-4f74-4673-86cd-82d70c400190}</Project>
+      <Name>QuieroCasa.InterfacesCRM.Business.Commons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuieroCasa.InterfacesCRM.Business\QuieroCasa.InterfacesCRM.Business.csproj">
       <Project>{9cb836e5-799b-433a-b104-28034ffa5350}</Project>
       <Name>QuieroCasa.InterfacesCRM.Business</Name>

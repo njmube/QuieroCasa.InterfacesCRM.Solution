@@ -1,26 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
-using Microsoft.Xrm.Sdk.Messages;
-using QuieroCasa.DynamicsCRM.Framework;
-using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Query;
 using QuieroCasa.InterfacesCRM.Data.Entities;
-using System.Collections;
+using QuieroCasa.InterfacesCRM.Business.Commons.Logs;
+using QuieroCasa.InterfacesCRM.Business.Commons.Exceptions;
 
 namespace QuieroCasa.InterfacesCRM.Business.Logic
 {
     public class IncidentsManagement
     {
         OrganizationServiceProxy _serviceProxy;
+        static readonly NLogWriter log = HostLogger.Get<ContactsManagement>();
 
-        public string Add(OrganizationServiceProxy organizationServiceProxy, string title, int priorityCode, int caseOriginCode, int caseTypeCode, string description, EntityReference parentcustomerid, string contactId, int departamentoCode, DateTime dateTimeStart)
+        public string Add(OrganizationServiceProxy organizationServiceProxy, string title, int priorityCode, int caseOriginCode, int caseTypeCode, string description, string contactId, int departamentoCode, DateTime dateTimeStart, string callerId)
         {
             try
             {
@@ -37,9 +30,10 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
                         CaseOriginCode = new OptionSetValue(caseOriginCode),
                         CaseTypeCode = new OptionSetValue(caseTypeCode),
                         Description = description,
-                        CustomerId = new EntityReference(Contact.EntityLogicalName, new Guid(contactId)),                        
+                        CustomerId = new EntityReference(Contact.EntityLogicalName, new Guid(contactId)),
                         its_departamento = new OptionSetValue(departamentoCode),
-                        its_fechayhoradeinicio = dateTimeStart
+                        its_fechayhoradeinicio = dateTimeStart,
+                        its_telefono = callerId
                     };
 
                     Guid incidentId = _serviceProxy.Create(newCase);
@@ -48,6 +42,7 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
             }
             catch (Exception ex)
             {
+                log.Error(string.Format("Error en el registro del caso del contacto {0} con el siguiente mensaje: {1}", contactId, ExceptionHelper.GetErrorMessage(ex, false)), ex);
                 throw ex;
             }
         }

@@ -35,6 +35,7 @@
       <HintPath>..\Referenced Assemblies\Microsoft.Xrm.Sdk.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +53,10 @@
     <ProjectReference Include="..\QuieroCasa.DynamicsCRM.Framework\QuieroCasa.DynamicsCRM.Framework.csproj">
       <Project>{072b646a-f15a-4790-9226-bf65cfde9dd9}</Project>
       <Name>QuieroCasa.DynamicsCRM.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuieroCasa.InterfacesCR.Business.Commons\QuieroCasa.InterfacesCRM.Business.Commons.csproj">
+      <Project>{380ac376-4f74-4673-86cd-82d70c400190}</Project>
+      <Name>QuieroCasa.InterfacesCRM.Business.Commons</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuieroCasa.InterfacesCRM.Business.Contracts\QuieroCasa.InterfacesCRM.Business.Contracts.csproj">
       <Project>{8c63e41d-7be5-4467-978c-340dbca7b41d}</Project>

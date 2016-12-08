@@ -9,7 +9,7 @@ namespace QuieroCasa.InterfacesCRM.Business.Contracts
 {
     public interface IIncomingCall
     {
-        ResponseIncomingCall RegisterIncomingCall(string callerId, DateTime dateTimeStart, string url, string guidCase, string urlCase);
+        ResponseIncomingCall RegisterIncomingCall(string callerId, DateTime dateTimeStart);
         int UpdateIncomingCall(string urlRecording, string dateTimeClosing, string guidCase);
     }
 }

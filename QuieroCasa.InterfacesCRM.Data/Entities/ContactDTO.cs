@@ -9,13 +9,12 @@ namespace QuieroCasa.InterfacesCRM.Data.Entities
 {
     public class ContactDTO
     {
-        public EntityReference accountid { get; set; }
         public string contactid { get; set; }
         public string emailaddress1 { get; set; }
         public string fullname { get; set; }
-        public EntityReference parentcustomerid { get; set; }
-        public EntityReference parentcontactid { get; set; }
-        
-
+        public string qc_telefonodecontacto { get; set; }
+        public string mobilephone { get; set; }
+        public string qc_otrotelefono { get; set; }
+        public string qc_telefonodeoficina { get; set; }
     }
 }

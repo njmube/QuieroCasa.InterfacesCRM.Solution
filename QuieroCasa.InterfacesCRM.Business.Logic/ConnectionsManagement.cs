@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Client;
-using Microsoft.Xrm.Sdk.Messages;
-using QuieroCasa.DynamicsCRM.Framework;
+﻿using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Query;
-using QuieroCasa.InterfacesCRM.Data.Entities;
-using System.Collections;
+using QuieroCasa.InterfacesCRM.Business.Commons.Exceptions;
+using QuieroCasa.InterfacesCRM.Business.Commons.Logs;
+using System;
+using System.Configuration;
 
 namespace QuieroCasa.InterfacesCRM.Business.Logic
 {
     public class ConnectionsManagement
     {
+        static readonly NLogWriter log = HostLogger.Get<ConnectionsManagement>();
+
         public OrganizationServiceProxy GetOrganizationServiceProxy()
         {
             try
@@ -27,13 +20,14 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
 
                 if (!serverConfig.IsReady)
                 {
-                    throw new Exception("Request Connection Error: " + serverConfig.LastCrmError, serverConfig.LastCrmException);
+                    throw new Exception(string.Format("Error en la conexión: LastCrmError {0} - LastCrmException {1}", serverConfig.LastCrmError, serverConfig.LastCrmException));
                 }
 
                 return serverConfig.OrganizationServiceProxy;
             }
             catch (Exception ex)
             {
+                log.Error(string.Format("No se pudo conectar al servidor CRM. Mensaje recibido {0}", ExceptionHelper.GetErrorMessage(ex, false)), ex);
                 throw ex;
             }
         }

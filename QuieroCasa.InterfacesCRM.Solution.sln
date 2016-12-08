@@ -34,7 +34,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.DynamicsCRM.Fram
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.InterfacesCRM.Business.Logic", "QuieroCasa.InterfacesCRM.Business.Logic\QuieroCasa.InterfacesCRM.Business.Logic.csproj", "{0A8A4F4E-4E43-4023-B5CF-D6AC8D07CAE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.InterfacesCR.Business.Commons", "QuieroCasa.InterfacesCR.Business.Commons\QuieroCasa.InterfacesCR.Business.Commons.csproj", "{380AC376-4F74-4673-86CD-82D70C400190}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.InterfacesCRM.Business.Commons", "QuieroCasa.InterfacesCR.Business.Commons\QuieroCasa.InterfacesCRM.Business.Commons.csproj", "{380AC376-4F74-4673-86CD-82D70C400190}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

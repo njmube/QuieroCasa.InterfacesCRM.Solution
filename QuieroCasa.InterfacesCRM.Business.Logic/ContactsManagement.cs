@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
-using Microsoft.Xrm.Sdk.Messages;
-using QuieroCasa.DynamicsCRM.Framework;
-using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
+using QuieroCasa.InterfacesCRM.Business.Commons.Exceptions;
+using QuieroCasa.InterfacesCRM.Business.Commons.Logs;
 using QuieroCasa.InterfacesCRM.Data.Entities;
-using System.Collections;
+using System;
+using System.Collections.Generic;
 
 namespace QuieroCasa.InterfacesCRM.Business.Logic
 {
     public class ContactsManagement
     {
         OrganizationServiceProxy _serviceProxy;
+        static readonly NLogWriter log = HostLogger.Get<ContactsManagement>();
 
         public List<ContactDTO> SearchByCallerId(OrganizationServiceProxy organizationServiceProxy, string callerId)
         {
@@ -33,18 +27,16 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
                     QueryExpression sdkContactsQuery = new QueryExpression
                     {
                         EntityName = Contact.EntityLogicalName,
-                        ColumnSet = new ColumnSet("accountid", "contactid", "emailaddress1", "fullname", "parentcustomerid", "parentcontactid"),
+                        ColumnSet = new ColumnSet("contactid", "emailaddress1", "fullname", "qc_telefonodecontacto", "mobilephone", "qc_otrotelefono", "qc_telefonodeoficina"),
                         Criteria = new FilterExpression()
                         {
                             FilterOperator = LogicalOperator.Or,
                             Conditions =
                             {
-                                new ConditionExpression("telephone1", ConditionOperator.Equal, callerId),
-                                new ConditionExpression("telephone2", ConditionOperator.Equal, callerId),
-                                new ConditionExpression("telephone3", ConditionOperator.Equal, callerId),
+                                new ConditionExpression("qc_telefonodecontacto", ConditionOperator.Equal, callerId),
                                 new ConditionExpression("mobilephone", ConditionOperator.Equal, callerId),
-                                new ConditionExpression("address1_telephone1", ConditionOperator.Equal, callerId),
-                                new ConditionExpression("address1_telephone2", ConditionOperator.Equal, callerId)
+                                new ConditionExpression("qc_otrotelefono", ConditionOperator.Equal, callerId),
+                                new ConditionExpression("qc_telefonodeoficina", ConditionOperator.Equal, callerId)
                             }
                         }
                     };
@@ -57,12 +49,13 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
 
                         listContacts.Add(new ContactDTO()
                         {
-                            accountid = contact.Attributes.Contains("accountid") ? ((EntityReference)contact.Attributes["accountid"]) : null,
                             contactid = contact.Attributes.Contains("contactid") ? contact.Attributes["contactid"].ToString() : string.Empty,
                             emailaddress1 = contact.Attributes.Contains("emailaddress1") ? contact.Attributes["emailaddress1"].ToString() : string.Empty,
                             fullname = contact.Attributes.Contains("fullname") ? contact.Attributes["fullname"].ToString() : string.Empty,
-                            parentcustomerid = contact.Attributes.Contains("parentcustomerid") ? ((EntityReference)contact.Attributes["parentcustomerid"]) : null,
-                            parentcontactid = contact.Attributes.Contains("parentcontactid") ? ((EntityReference)contact.Attributes["parentcontactid"]) : null
+                            qc_telefonodecontacto = contact.Attributes.Contains("qc_telefonodecontacto") ? contact.Attributes["qc_telefonodecontacto"].ToString() : string.Empty,
+                            mobilephone = contact.Attributes.Contains("mobilephone") ? contact.Attributes["mobilephone"].ToString() : string.Empty,
+                            qc_otrotelefono = contact.Attributes.Contains("qc_otrotelefono") ? contact.Attributes["qc_otrotelefono"].ToString() : string.Empty,
+                            qc_telefonodeoficina = contact.Attributes.Contains("qc_telefonodeoficina") ? contact.Attributes["qc_telefonodeoficina"].ToString() : string.Empty
                         });
 
                     }
@@ -72,10 +65,11 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
             }
             catch (Exception ex)
             {
+                log.Error(string.Format("Error en la busqueda de contactos con el caller id {0} con el siguiente mensaje: {1}", callerId, ExceptionHelper.GetErrorMessage(ex, false)), ex);
                 throw ex;
             }
         }
-        public string Add(OrganizationServiceProxy organizationServiceProxy, string callerId)
+        public string Add(OrganizationServiceProxy organizationServiceProxy, string callerId, string emailAddress)
         {
             try
             {
@@ -86,7 +80,7 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
                     Contact newContact = new Contact()
                     {
                         qc_telefonodecontacto = callerId,
-                        EMailAddress1 = "miguel.martinez@grw.com.mx"
+                        EMailAddress1 = emailAddress
                     };
 
                     Guid incidentId = _serviceProxy.Create(newContact);
@@ -95,6 +89,7 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
             }
             catch (Exception ex)
             {
+                log.Error(string.Format("Error en el registro del contacto con el caller id {0} con el siguiente mensaje: {1}", callerId, ExceptionHelper.GetErrorMessage(ex, false)), ex);
                 throw ex;
             }
         }
