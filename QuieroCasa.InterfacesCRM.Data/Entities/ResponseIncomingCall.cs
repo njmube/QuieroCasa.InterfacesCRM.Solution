@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿// ------------------------------------------------------------------------------------------------
+// <copyright file="ResponseIncomingCall.cs" company="Inmobiliaria Quiero Casa, S.A. de C.V.">
+//  Copyright (c) 2016-2017 INMOBILIARIA QUIERO CASA, S.A. de C.V., All rights reserved.
+// </copyright>
+// ------------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
 
 namespace QuieroCasa.InterfacesCRM.Data.Entities
 {

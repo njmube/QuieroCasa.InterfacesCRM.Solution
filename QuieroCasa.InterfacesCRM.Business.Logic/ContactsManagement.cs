@@ -1,4 +1,10 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿// ------------------------------------------------------------------------------------------------
+// <copyright file="ContactsManagement.cs" company="Inmobiliaria Quiero Casa, S.A. de C.V.">
+//  Copyright (c) 2016-2017 INMOBILIARIA QUIERO CASA, S.A. de C.V., All rights reserved.
+// </copyright>
+// ------------------------------------------------------------------------------------------------
+
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
 using QuieroCasa.InterfacesCRM.Business.Commons.Exceptions;

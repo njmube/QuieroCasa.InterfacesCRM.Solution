@@ -1,26 +1,32 @@
-﻿using System;
+﻿// ------------------------------------------------------------------------------------------------
+// <copyright file="OutgoingCall.cs" company="Inmobiliaria Quiero Casa, S.A. de C.V.">
+//  Copyright (c) 2016-2017 INMOBILIARIA QUIERO CASA, S.A. de C.V., All rights reserved.
+// </copyright>
+// ------------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using QuieroCasa.InterfacesCRM.Business;
+using QuieroCasa.InterfacesCRM.Data.Entities;
 
 namespace QuieroCasa.InterfacesCRM.Services
 {
     /// <summary>
-    /// Summary description for OutgoingCall
+    /// 
     /// </summary>
-    [WebService(Namespace = "http://tempuri.org/")]
+    [WebService(Namespace = "http://quierocasa.com.mx/InterfacesCRM/", Description = "Web Services CRM Quiero Casa  para Llamadas de Salida")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]
     public class OutgoingCall : System.Web.Services.WebService
     {
+        QuieroCasa.InterfacesCRM.Business.OutgoingCall callOut = new QuieroCasa.InterfacesCRM.Business.OutgoingCall();
 
         [WebMethod]
-        public string HelloWorld()
+        public int RequestOutgoingCall(string contactId, string callerId, string address, string guidCall)
         {
-            return "Hello World";
+            return callOut.RequestOutgoingCall(contactId, callerId, address, guidCall);
         }
     }
 }
