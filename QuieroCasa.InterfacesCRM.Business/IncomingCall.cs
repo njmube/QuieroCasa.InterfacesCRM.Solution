@@ -49,6 +49,11 @@ namespace QuieroCasa.InterfacesCRM.Business
                 {
                     contactId = ConfigurationManager.AppSettings["defaultContactId"].ToString();
                 }
+                else
+                if (response.ListContacts.Count > 1)
+                {
+                    contactId = ConfigurationManager.AppSettings["defaultContactId"].ToString();
+                }
 
                 response.caseId = incidents.Add(organization, "Caso Nimbus del Agente " + username, (int)PriorityCode.Alta, (int)CaseOriginCode.Telefono, (int)CaseTypeCode.Pregunta, "Caso generado para: " + urlNimbus, contactId, (int)Department.Ventas, dateTimeStart, callerId, dateTimeStart.ToString("HH:mm:ss"));
                 response.urlCase = string.Format(StringHelper.GetURLConnectionString(ConfigurationManager.ConnectionStrings["CRMOnline"].ConnectionString) + "/main.aspx?etn=incident&pagetype=entityrecord&id=%7b{0}%7d", response.caseId);
