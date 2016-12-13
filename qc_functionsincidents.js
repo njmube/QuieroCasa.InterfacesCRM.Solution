@@ -18,9 +18,22 @@ function changeOwnerCase() {
 }
 function filterPhoneNumbersIdentifiedContacts() {
     var identifiedPhone = Xrm.Page.getAttribute("its_telefono").getValue();
+    var input = document.getElementById('numerostelefonicosidentificados_findCriteria');
 
-    if (identifiedPhone != null) {
-        Xrm.Page.getControl("numerostelefonicosidentificados").addPreSearch(filterContacts);
+    if (input != null) {
+        input.value = identifiedPhone;
+        var button = document.getElementById('numerostelefonicosidentificados_findCriteriaButton');
+
+        if (button != null) {
+            Xrm.Page.ui.setFormNotification("boton encontrado", "Nimbus", "1");
+            button.click();
+        }
+        else {
+            Xrm.Page.ui.setFormNotification("boton fallido", "Nimbus", "1");
+        }
+    }
+    else {
+        Xrm.Page.ui.setFormNotification("input fallido", "Nimbus", "1");
     }
 }
 
