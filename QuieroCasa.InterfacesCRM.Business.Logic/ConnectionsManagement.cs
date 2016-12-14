@@ -4,6 +4,7 @@
 // </copyright>
 // ------------------------------------------------------------------------------------------------
 
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Tooling.Connector;
 using QuieroCasa.InterfacesCRM.Business.Commons.Exceptions;
@@ -17,7 +18,7 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
     {
         static readonly NLogWriter log = HostLogger.Get<ConnectionsManagement>();
 
-        public OrganizationServiceProxy GetOrganizationServiceProxy()
+        public IOrganizationService GetOrganizationServiceProxy()
         {
             try
             {
@@ -29,7 +30,7 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
                     throw new Exception(string.Format("Error en la conexión: LastCrmError {0} - LastCrmException {1}", serverConfig.LastCrmError, serverConfig.LastCrmException));
                 }
 
-                return serverConfig.OrganizationServiceProxy;
+                return (IOrganizationService)serverConfig.OrganizationServiceProxy;
             }
             catch (Exception ex)
             {

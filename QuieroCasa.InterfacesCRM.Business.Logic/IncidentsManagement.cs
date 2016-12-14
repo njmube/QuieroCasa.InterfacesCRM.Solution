@@ -16,36 +16,30 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
 {
     public class IncidentsManagement
     {
-        OrganizationServiceProxy _serviceProxy;
         static readonly NLogWriter log = HostLogger.Get<ContactsManagement>();
 
-        public string Add(OrganizationServiceProxy organizationServiceProxy, string title, int priorityCode, int caseOriginCode, int caseTypeCode, string description, string contactId, int departamentoCode, DateTime dateTimeStart, string callerId, string timeStart)
+        public string Add(IOrganizationService organizationServiceProxy, string title, int priorityCode, int caseOriginCode, int caseTypeCode, string description, string contactId, int departamentoCode, DateTime dateTimeStart, string callerId, string timeStart)
         {
             try
             {
                 List<ContactDTO> listContacts = new List<ContactDTO>();
 
-                using (_serviceProxy = organizationServiceProxy)
+                Incident newCase = new Incident()
                 {
-                    _serviceProxy.EnableProxyTypes();
+                    Title = title,
+                    PriorityCode = new OptionSetValue(priorityCode),
+                    CaseOriginCode = new OptionSetValue(caseOriginCode),
+                    CaseTypeCode = new OptionSetValue(caseTypeCode),
+                    Description = description,
+                    CustomerId = new EntityReference(Contact.EntityLogicalName, new Guid(contactId)),
+                    its_departamento = new OptionSetValue(departamentoCode),
+                    its_fechayhoradeinicio = dateTimeStart,
+                    its_telefono = callerId,
+                    its_horadeinicio = timeStart
+                };
 
-                    Incident newCase = new Incident()
-                    {
-                        Title = title,
-                        PriorityCode = new OptionSetValue(priorityCode),
-                        CaseOriginCode = new OptionSetValue(caseOriginCode),
-                        CaseTypeCode = new OptionSetValue(caseTypeCode),
-                        Description = description,
-                        CustomerId = new EntityReference(Contact.EntityLogicalName, new Guid(contactId)),
-                        its_departamento = new OptionSetValue(departamentoCode),
-                        its_fechayhoradeinicio = dateTimeStart,
-                        its_telefono = callerId,
-                        its_horadeinicio = timeStart
-                    };
-
-                    Guid incidentId = _serviceProxy.Create(newCase);
-                    return incidentId.ToString();
-                }
+                Guid incidentId = organizationServiceProxy.Create(newCase);
+                return incidentId.ToString();
             }
             catch (Exception ex)
             {
@@ -53,25 +47,20 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
                 throw ex;
             }
         }
-        public bool Update(OrganizationServiceProxy organizationServiceProxy, string caseId, DateTime dateTimeClosing, string urlRecording, string timeEnd)
+        public bool Update(IOrganizationService organizationServiceProxy, string caseId, DateTime dateTimeClosing, string urlRecording, string timeEnd)
         {
             try
             {
-                using (_serviceProxy = organizationServiceProxy)
+                Incident updateCase = new Incident()
                 {
-                    _serviceProxy.EnableProxyTypes();
+                    IncidentId = new Guid(caseId),
+                    its_urldegrabacion = urlRecording,
+                    its_fechayhoradecierre = dateTimeClosing,
+                    its_horadecierre = timeEnd
+                };
 
-                    Incident updateCase = new Incident()
-                    {
-                        IncidentId = new Guid(caseId),
-                        its_urldegrabacion = urlRecording,
-                        its_fechayhoradecierre = dateTimeClosing,
-                        its_horadecierre = timeEnd
-                    };
-
-                    _serviceProxy.Update(updateCase);
-                    return true;
-                }
+                organizationServiceProxy.Update(updateCase);
+                return true;
             }
             catch (Exception ex)
             {

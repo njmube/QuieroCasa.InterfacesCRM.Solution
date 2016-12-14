@@ -16,33 +16,25 @@ function changeOwnerCase() {
         }
     }
 }
-function filterPhoneNumbersIdentifiedContacts() {
-    var identifiedPhone = Xrm.Page.getAttribute("its_telefono").getValue();
-    var input = document.getElementById('numerostelefonicosidentificados_findCriteria');
-
-    if (input != null) {
-        input.value = identifiedPhone;
-        var button = document.getElementById('numerostelefonicosidentificados_findCriteriaButton');
-
-        if (button != null) {
-            Xrm.Page.ui.setFormNotification("boton encontrado", "Nimbus", "1");
-            button.click();
-        }
-        else {
-            Xrm.Page.ui.setFormNotification("boton fallido", "Nimbus", "1");
-        }
-    }
-    else {
-        Xrm.Page.ui.setFormNotification("input fallido", "Nimbus", "1");
-    }
+function preFilterClient() {
+    Xrm.Page.getControl("customerid").addPreSearch(function () { addLookupFilterContacts(); });
 }
+function addLookupFilterContacts() {
+    var identifiedPhone = Xrm.Page.getAttribute("its_telefono").getValue();
 
-function filterContacts() {
+    console.log(identifiedPhone);
 
-    var identifiedPhoneValue = Xrm.Page.getAttribute("its_telefono").getValue();
+    if (identifiedPhone != null) {
+        var fetchXml = '';
+        fetchXml += "<filter type='or'>"
+        fetchXml += "<condition attribute='qc_telefonodecontacto' operator='eq' value='" + identifiedPhone + "' />";
+        fetchXml += "<condition attribute='mobilephone' operator='eq' value='" + identifiedPhone + "' />";
+        fetchXml += "<condition attribute='qc_otrotelefono' operator='eq' value='" + identifiedPhone + "' />";
+        fetchXml += "<condition attribute='qc_telefonodeoficina' operator='eq' value='" + identifiedPhone + "' />";
+        fetchXml += "</filter>";
 
-    if (identifiedPhoneValue != null) {
-        var list_filter = "&lt;filter type='and'&gt;" + "&lt;condition attribute='qc_telefonodecontacto' operator='eq' value='" + identifiedPhoneValue + "' /&gt;" + "&lt;/filter&gt;";
-        Xrm.Page.getControl("numerostelefonicosidentificados").addCustomFilter(list_filter, "contact");
+        console.log(fetchXml);
+
+        Xrm.Page.getControl("customerid").addCustomFilter(fetchXml, "contact");
     }
 }

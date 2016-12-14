@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.InterfacesCRM.Bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.InterfacesCRM.Business.Commons", "QuieroCasa.InterfacesCR.Business.Commons\QuieroCasa.InterfacesCRM.Business.Commons.csproj", "{380AC376-4F74-4673-86CD-82D70C400190}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JavasScript", "JavasScript", "{46A4CF10-5279-499C-99D3-1894B2D37B8C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JavaScript", "JavaScript", "{46A4CF10-5279-499C-99D3-1894B2D37B8C}"
 	ProjectSection(SolutionItems) = preProject
 		qc_functionsincidents.js = qc_functionsincidents.js
 	EndProjectSection

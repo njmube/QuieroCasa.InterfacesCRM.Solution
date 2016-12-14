@@ -18,6 +18,7 @@ using QuieroCasa.InterfacesCRM.Business.Commons.Exceptions;
 using QuieroCasa.InterfacesCRM.Business.Commons.Utils;
 using System.Configuration;
 using System.Data.SqlClient;
+using Microsoft.Xrm.Sdk;
 
 namespace QuieroCasa.InterfacesCRM.Business
 {
@@ -28,7 +29,7 @@ namespace QuieroCasa.InterfacesCRM.Business
         public ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime dateTimeStart, string username, string callId, string urlNimbus)
         {
             ResponseIncomingCall response = new ResponseIncomingCall();
-            OrganizationServiceProxy organization = null;
+            IOrganizationService organization = null;
             ConnectionsManagement conn = new ConnectionsManagement();
             ContactsManagement contacts = new ContactsManagement();
             IncidentsManagement incidents = new IncidentsManagement();
@@ -88,7 +89,7 @@ namespace QuieroCasa.InterfacesCRM.Business
         public ResponseIncomingCall UpdateIncomingCall(string caseId, DateTime dateTimeClosing, string urlNimbus, string urlRecording)
         {
             ResponseIncomingCall response = new ResponseIncomingCall();
-            OrganizationServiceProxy organization = null;
+            IOrganizationService organization = null;
             ConnectionsManagement conn = new ConnectionsManagement();
             IncidentsManagement incidents = new IncidentsManagement();
 
