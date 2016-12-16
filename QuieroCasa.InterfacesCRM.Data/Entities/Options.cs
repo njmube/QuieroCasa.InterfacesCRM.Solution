@@ -40,4 +40,15 @@ namespace QuieroCasa.InterfacesCRM.Data.Entities
         AtencionaClientes = 960760002,
         Otro = 960760003
     }
+    public enum CaseCreatedBy
+    {
+        Llamada = 960760000,
+        Correo = 960760001
+    }
+    public enum CalledStatus
+    {
+        SinAtender = 960760000,
+        EnCurso = 960760001,
+        Resuelto = 960760002
+    }
 }

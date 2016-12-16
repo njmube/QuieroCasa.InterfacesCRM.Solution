@@ -38,25 +38,16 @@ namespace QuieroCasa.InterfacesCRM.Business
             {
                 organization = conn.GetOrganizationServiceProxy();
                 response.ListContacts = contacts.SearchByCallerId(organization, callerId);
-
-                string contactId = string.Empty;
+                string identifiedPersonId = string.Empty;
 
                 if (response.ListContacts.Count == 1)
                 {
-                    contactId = response.ListContacts.First().contactid;
-                }
-                else
-                if (response.ListContacts.Count == 0)
-                {
-                    contactId = ConfigurationManager.AppSettings["defaultContactId"].ToString();
-                }
-                else
-                if (response.ListContacts.Count > 1)
-                {
-                    contactId = ConfigurationManager.AppSettings["defaultContactId"].ToString();
+                    identifiedPersonId = response.ListContacts.First<ContactDTO>().contactid;
                 }
 
-                response.caseId = incidents.Add(organization, "Caso Nimbus del Agente " + username, (int)PriorityCode.Alta, (int)CaseOriginCode.Telefono, (int)CaseTypeCode.Pregunta, "Caso generado para: " + urlNimbus, contactId, (int)Department.Ventas, dateTimeStart, callerId, dateTimeStart.ToString("HH:mm:ss"));
+                string contactId = ConfigurationManager.AppSettings["defaultContactId"].ToString();
+
+                response.caseId = incidents.Add(organization, "Caso Nimbus del Agente " + username, (int)PriorityCode.Alta, (int)CaseOriginCode.Telefono, (int)CaseTypeCode.Pregunta, "Caso generado para: " + urlNimbus, contactId, (int)Department.Ventas, dateTimeStart, callerId, dateTimeStart.ToString("HH:mm:ss"), (int) CaseCreatedBy.Llamada, response.ListContacts.Count, callId, identifiedPersonId);
                 response.urlCase = string.Format(StringHelper.GetURLConnectionString(ConfigurationManager.ConnectionStrings["CRMOnline"].ConnectionString) + "/main.aspx?etn=incident&pagetype=entityrecord&id=%7b{0}%7d", response.caseId);
                 response.codError = 0;
                 response.error = string.Empty;

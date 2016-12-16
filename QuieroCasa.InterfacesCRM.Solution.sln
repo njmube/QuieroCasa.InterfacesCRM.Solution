@@ -38,6 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.InterfacesCRM.Bu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JavaScript", "JavaScript", "{46A4CF10-5279-499C-99D3-1894B2D37B8C}"
 	ProjectSection(SolutionItems) = preProject
+		qc_functionscallsoutput.js = qc_functionscallsoutput.js
 		qc_functionsincidents.js = qc_functionsincidents.js
 	EndProjectSection
 EndProject

@@ -18,7 +18,9 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
     {
         static readonly NLogWriter log = HostLogger.Get<ContactsManagement>();
 
-        public string Add(IOrganizationService organizationServiceProxy, string title, int priorityCode, int caseOriginCode, int caseTypeCode, string description, string contactId, int departamentoCode, DateTime dateTimeStart, string callerId, string timeStart)
+        public string Add(IOrganizationService organizationServiceProxy, string title, int priorityCode, int caseOriginCode, int caseTypeCode, string description
+            , string contactId, int departamentoCode, DateTime dateTimeStart, string callerId, string timeStart, int caseCreatedBy, int identifiedContacts
+            , string callId, string identifiedPersonId)
         {
             try
             {
@@ -35,7 +37,11 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
                     its_departamento = new OptionSetValue(departamentoCode),
                     its_fechayhoradeinicio = dateTimeStart,
                     its_telefono = callerId,
-                    its_horadeinicio = timeStart
+                    its_horadeinicio = timeStart,
+                    its_casocreadopor = new OptionSetValue(caseCreatedBy),
+                    its_iddelallamada = callId,
+                    its_contactosidentificados = identifiedContacts,
+                    its_personaidentificada = string.IsNullOrEmpty(identifiedPersonId) ? null : new EntityReference(Contact.EntityLogicalName, new Guid(identifiedPersonId)),
                 };
 
                 Guid incidentId = organizationServiceProxy.Create(newCase);
