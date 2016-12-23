@@ -15,7 +15,7 @@ using QuieroCasa.InterfacesCRM.Data.Entities;
 namespace QuieroCasa.InterfacesCRM.Services
 {
     /// <summary>
-    /// 
+    /// Clase que nos permite el tratamiento del registro y actualización de Llamadas de Salida.
     /// </summary>
     [WebService(Namespace = "http://quierocasa.com.mx/InterfacesCRM/", Description = "Web Services CRM Quiero Casa  para Llamadas de Salida")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -24,9 +24,9 @@ namespace QuieroCasa.InterfacesCRM.Services
         QuieroCasa.InterfacesCRM.Business.OutgoingCall callOut = new QuieroCasa.InterfacesCRM.Business.OutgoingCall();
 
         [WebMethod]
-        public int RequestOutgoingCall(string contactId, string callerId, string address, string guidCall)
+        public ResponseOutgoingCall UpdateOutgoingCall(string activityId, int statusCall, DateTime dateTimeStart, DateTime dateTimeClosing, int callDuration, string callURL, string callId)
         {
-            return callOut.RequestOutgoingCall(contactId, callerId, address, guidCall);
+            return callOut.UpdateOutgoingCall(activityId, statusCall, dateTimeStart, dateTimeClosing, callDuration, callURL, callId);
         }
     }
 }

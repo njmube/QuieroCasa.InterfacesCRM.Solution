@@ -75,6 +75,7 @@
     <Compile Include="ConnectionsManagement.cs" />
     <Compile Include="ContactsManagement.cs" />
     <Compile Include="IncidentsManagement.cs" />
+    <Compile Include="PhoneCallsManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -51,4 +51,10 @@ namespace QuieroCasa.InterfacesCRM.Data.Entities
         EnCurso = 960760001,
         Resuelto = 960760002
     }
+    public enum CalledStatusNimbus
+    {
+        Contestado = 947980000,
+        Ocupado = 947980001,
+        Cancelado = 947980002
+    }
 }
