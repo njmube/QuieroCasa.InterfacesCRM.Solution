@@ -42,6 +42,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JavaScript", "JavaScript", 
 		qc_functionsincidents.js = qc_functionsincidents.js
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{B8A9C168-FEC7-43F3-92F2-FA59AF96DEED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuieroCasa.InterfacesCRM.Plugins", "QuieroCasa.InterfacesCRM.Plugins\QuieroCasa.InterfacesCRM.Plugins.csproj", "{ED52230B-7A2B-49FD-8766-C5A803DC8C59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +80,10 @@ Global
 		{380AC376-4F74-4673-86CD-82D70C400190}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{380AC376-4F74-4673-86CD-82D70C400190}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{380AC376-4F74-4673-86CD-82D70C400190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED52230B-7A2B-49FD-8766-C5A803DC8C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED52230B-7A2B-49FD-8766-C5A803DC8C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED52230B-7A2B-49FD-8766-C5A803DC8C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED52230B-7A2B-49FD-8766-C5A803DC8C59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,5 +96,6 @@ Global
 		{072B646A-F15A-4790-9226-BF65CFDE9DD9} = {A8324D45-3692-4C82-92AA-C7C5E5AE5C4E}
 		{0A8A4F4E-4E43-4023-B5CF-D6AC8D07CAE2} = {BCE7DA5A-7D81-425D-A1C0-87E85E4E73B6}
 		{380AC376-4F74-4673-86CD-82D70C400190} = {BCE7DA5A-7D81-425D-A1C0-87E85E4E73B6}
+		{ED52230B-7A2B-49FD-8766-C5A803DC8C59} = {B8A9C168-FEC7-43F3-92F2-FA59AF96DEED}
 	EndGlobalSection
 EndGlobal
