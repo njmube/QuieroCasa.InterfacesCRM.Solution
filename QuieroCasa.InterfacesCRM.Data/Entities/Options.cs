@@ -42,8 +42,10 @@ namespace QuieroCasa.InterfacesCRM.Data.Entities
     }
     public enum CaseCreatedBy
     {
-        Llamada = 960760000,
-        Correo = 960760001
+        LlamadaAtendida = 947980000,
+        Correo = 947980001,
+        LlamadadeBuzon = 947980002,
+        PaginaWeb = 960760001
     }
     public enum CalledStatus
     {
@@ -56,5 +58,10 @@ namespace QuieroCasa.InterfacesCRM.Data.Entities
         Contestado = 947980000,
         Ocupado = 947980001,
         Cancelado = 947980002
+    }
+    public enum TypeCall
+    {
+        Local = 960760000,
+        Celular = 960760001
     }
 }

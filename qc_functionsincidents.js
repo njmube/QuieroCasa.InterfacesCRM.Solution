@@ -38,3 +38,12 @@ function addLookupFilterContacts() {
         Xrm.Page.getControl("customerid").addCustomFilter(fetchXml, "contact");
     }
 }
+
+function updateNimbusIFrame() {
+    var urlNimbus = Xrm.Page.getAttribute("description").getValue();
+    if (urlNimbus != null || urlNimbus != '' || urlNimbus != undefined) {
+        var nimbusIframe = Xrm.Page.ui.controls.get("IFRAME_nimbus");
+        var newUrl = urlNimbus;
+        nimbusIframe.setSrc(newUrl);
+    }
+}

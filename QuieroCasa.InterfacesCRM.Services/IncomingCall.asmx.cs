@@ -24,14 +24,14 @@ namespace QuieroCasa.InterfacesCRM.Services
         QuieroCasa.InterfacesCRM.Business.IncomingCall callIn = new QuieroCasa.InterfacesCRM.Business.IncomingCall();
 
         [WebMethod]
-        public ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime dateTimeStart, string username, string callId, string urlNimbus)
+        public ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime dateTimeStart, string username, string callId, string urlNimbus, string dialedNumber)
         {
-            return callIn.RegisterIncomingCall(callerId, typeCall, dateTimeStart, username, callId, urlNimbus);
+            return callIn.RegisterIncomingCall(callerId, typeCall, dateTimeStart, username, callId, urlNimbus, dialedNumber);
         }
         [WebMethod]
-        public ResponseIncomingCall UpdateIncomingCall(string caseId, DateTime dateTimeClosing, string urlNimbus, string urlRecording)
+        public ResponseIncomingCall UpdateIncomingCall(string caseId, DateTime dateTimeClosing, string urlRecording)
         {
-            return callIn.UpdateIncomingCall(caseId, dateTimeClosing, urlNimbus, urlRecording);
+            return callIn.UpdateIncomingCall(caseId, dateTimeClosing, urlRecording);
         }
     }
 }

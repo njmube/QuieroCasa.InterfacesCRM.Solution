@@ -11,7 +11,7 @@ namespace QuieroCasa.InterfacesCRM.Business.Contracts
 {
     public interface IIncomingCall
     {
-        ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime dateTimeStart, string username, string callId, string urlNimbus);
-        ResponseIncomingCall UpdateIncomingCall(string caseId, DateTime dateTimeClosing, string urlNimbus, string urlRecording);
+        ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime dateTimeStart, string username, string callId, string urlNimbus, string dialedNumber);
+        ResponseIncomingCall UpdateIncomingCall(string caseId, DateTime dateTimeClosing, string urlRecording);
     }
 }

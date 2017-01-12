@@ -26,8 +26,9 @@ namespace QuieroCasa.InterfacesCRM.Business
     {
         static readonly NLogWriter log = HostLogger.Get<IncomingCall>();
 
-        public ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime dateTimeStart, string username, string callId, string urlNimbus)
+        public ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime dateTimeStart, string username, string callId, string urlNimbus, string dialedNumber)
         {
+            StringBuilder sbLog = new StringBuilder();
             ResponseIncomingCall response = new ResponseIncomingCall();
             IOrganizationService organization = null;
             ConnectionsManagement conn = new ConnectionsManagement();
@@ -46,18 +47,51 @@ namespace QuieroCasa.InterfacesCRM.Business
                 }
 
                 string contactId = ConfigurationManager.AppSettings["defaultContactId"].ToString();
+                string area = string.Empty;
+                string phoneCallCenter = ConfigurationManager.AppSettings["phoneCallCenter"].ToString();
+                string areaIdCallCenter = ConfigurationManager.AppSettings["areaIdCallCenter"].ToString();
+                string phoneCustomerService = ConfigurationManager.AppSettings["phoneCustomerService"].ToString();
+                string areaIdCustomerService = ConfigurationManager.AppSettings["areaIdCustomerService"].ToString();
 
-                response.caseId = incidents.Add(organization, "Caso Nimbus del Agente " + username, (int)PriorityCode.Alta, (int)CaseOriginCode.Telefono, (int)CaseTypeCode.Pregunta, "Caso generado para: " + urlNimbus, contactId, (int)Department.Ventas, dateTimeStart, callerId, dateTimeStart.ToString("HH:mm:ss"), (int) CaseCreatedBy.Llamada, response.ListContacts.Count, callId, identifiedPersonId);
+                if (dialedNumber.Equals(phoneCallCenter))
+                {
+                    area = areaIdCallCenter;
+                }
+                else
+                if (dialedNumber.Equals(phoneCustomerService))
+                {
+                    area = areaIdCustomerService;
+                }
+
+                int typeInputCall = 0;
+
+                if (typeCall == 1)
+                {
+                    typeInputCall = (int)TypeCall.Local;
+                }
+                else
+                if (typeCall == 2)
+                {
+                    typeInputCall = (int)TypeCall.Celular;
+                }
+
+                response.caseId = incidents.Add(organization, "Caso Nimbus del Agente " + username, (int)PriorityCode.Alta, (int)CaseOriginCode.Telefono, (int)CaseTypeCode.Pregunta, urlNimbus, contactId, area, dateTimeStart, callerId, dateTimeStart.ToString("HH:mm:ss"), (int) CaseCreatedBy.LlamadaAtendida, response.ListContacts.Count, callId, identifiedPersonId, typeInputCall);
                 response.urlCase = string.Format(StringHelper.GetURLConnectionString(ConfigurationManager.ConnectionStrings["CRMOnline"].ConnectionString) + "/main.aspx?etn=incident&pagetype=entityrecord&id=%7b{0}%7d", response.caseId);
                 response.codError = 0;
                 response.error = string.Empty;
                 response.success = true;
                 response.message = "Caso creado exitosamente";
-                log.Info(string.Format("Caso creado exitosamente: caseID {0} para el contacto {1} con la solicitud callerId {2} fecha y hora de inicio {3} con un total de {4} coincidencias encontradas. URL generada: {5}", response.caseId, contactId, callerId, dateTimeStart, response.ListContacts.Count, response.urlCase));
+
+                sbLog.AppendFormat("Caso creado exitosamente con el CaseId {0} para el Contacto {1} con un total de {2} coincidencias encontradas. URL generada: {3} con los parametros de entrada callerId: {4}, dateTimeStart: {5}, username: {6}, callId: {7}, urlNimbus: {8}, dialedNumber: {9} \n", response.caseId, contactId, response.ListContacts.Count, response.urlCase, callerId, dateTimeStart, username, callId, urlNimbus, dialedNumber);
+
+                log.Info(sbLog.ToString());
             }
             catch (Exception ex)
             {
-                log.Error(string.Format("Error en el registro de la llamada de Nimbus para el contacto con el caller id {0} fecha y hora de inicio {1} con el siguiente mensaje: {2}", callerId, dateTimeStart, ExceptionHelper.GetErrorMessage(ex, false)), ex);
+                sbLog = new StringBuilder();
+                sbLog.AppendFormat("Error en el registro de la llamada de Nimbus con el siguiente mensaje: {0} con los parametros de entrada callerId: {1}, dateTimeStart: {2}, username: {3}, callId: {4}, urlNimbus: {5}, dialedNumber: {6} \n", ExceptionHelper.GetErrorMessage(ex, false), callerId, dateTimeStart, username, callId, urlNimbus, dialedNumber);
+
+                log.Error(sbLog.ToString(), ex);
 
                 response.codError = 5001;
                 response.error = ExceptionHelper.GetErrorMessage(ex, false);
@@ -77,7 +111,7 @@ namespace QuieroCasa.InterfacesCRM.Business
 
             return response;
         }
-        public ResponseIncomingCall UpdateIncomingCall(string caseId, DateTime dateTimeClosing, string urlNimbus, string urlRecording)
+        public ResponseIncomingCall UpdateIncomingCall(string caseId, DateTime dateTimeClosing, string urlRecording)
         {
             ResponseIncomingCall response = new ResponseIncomingCall();
             IOrganizationService organization = null;

@@ -16,6 +16,19 @@ function callWebServiceNimbus() {
             return;
         }
 
+        var tipo = Xrm.Page.getAttribute("its_tipodellamada").getValue();
+
+        if (tipo == null || tipo == '' || tipo == undefined) {
+            alert('El tipo de llamada es requerida...');
+            return;
+        }
+
+        var userIntegracion = {
+            username: '@S0p0rt3#',
+            password: '#quierocasa!',
+            user_agente: 'pruebasnimbus'
+        };
+
         var userNimbus = {
             username: '',
             password: ''
@@ -43,13 +56,13 @@ function callWebServiceNimbus() {
                     password: retrievedUser.its_contrasena
                 };
                 
-                if (userNimbus.username == null || userNimbus.password == null) {
+                if (userNimbus.username == null || userNimbus.password == null || userNimbus.user_agente == null) {
                     alert('Sin información de acceso del usuario de Nimbus');
                     return;
                 }
 
                 var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open('POST', 'http://quierocasa.nimbuscc.mx/ccs/servicios.php/AGENT_CALL', true);
+                xmlhttp.open('POST', 'http://quierocasa.nimbuscc.mx/ccs/servicios.php/CLICK_TO_CALL', true);
 
                 var sr =
                     '<?xml version="1.0" encoding="utf-8"?>' +
@@ -59,13 +72,14 @@ function callWebServiceNimbus() {
                         'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">' +
                         'xmlns:ser="http://www.nimbuscc.mx/ccs/servicios.php' +
                         '<soapenv:Body>' +
-                            '<ser:AGENT_CALL soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
-                                '<usuario xsi:type="xsd:string">' + userNimbus.username + '</usuario>' +
-                                '<contrasena xsi:type="xsd:string">' + userNimbus.password + '</contrasena>' +
-                                '<user_agente xsi:type="xsd:string">test</user_agente>' +
-                                '<ext_agente xsi:type="xsd:string">123456789</ext_agente>' +
+                            ' <ser:CLIC_TO_CALL soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+                                '<usuario xsi:type="xsd:string">' + userIntegracion.username + '</usuario>' +
+                                '<contrasena xsi:type="xsd:string">' + userIntegracion.password + '</contrasena>' +
+                                '<user_agente xsi:type="xsd:string">' + userIntegracion.user_agente + '</user_agente>' +
                                 '<numero xsi:type="xsd:string">' + phonenumber + '</numero>' +
-                            '</ser:AGENT_CALL>' +
+                                '<tipo xsi:type="xsd:string">' + tipo + '</tipo>' +
+                                '<idllamada xsi:type="xsd:string">' + id + '</idllamada>' +
+                            ' </ser:CLIC_TO_CALL>' +
                         '</soapenv:Body>' +
                     '</soapenv:Envelope>';
 
@@ -74,13 +88,16 @@ function callWebServiceNimbus() {
                         if (xmlhttp.status == 200) {
                             var nodeError = xmlhttp.responseXML.getElementsByTagName('error');
                             var nodeDescripcion = xmlhttp.responseXML.getElementsByTagName('descripcion');
-                            var idOperacion = xmlhttp.responseXML.getElementsByTagName('id_operacion');
+                            var idOperacion = '';
+                            var url = '';
                             var message = '';
 
                             if (nodeError[0].innerHTML == '0') {
-                                message = 'Se establecio la llamada con Nimbus de forma exitosa.';
+                                url = xmlhttp.responseXML.getElementsByTagName('url');
+                                message = 'La llamada ha sido enviada de manera correcta a la extension.';
                             }
                             else {
+                                idOperacion = xmlhttp.responseXML.getElementsByTagName('id_operacion');
                                 message = 'No se pudo establecer la llamada con Nimbus para el número de teléfono ' + phonenumber + '. \n Codigo error: ' + nodeError[0].innerHTML
                                 + '. \n Descripción: ' + nodeDescripcion[0].innerHTML + '. \n Id de operación: ' + idOperacion[0].innerHTML;
                             }
