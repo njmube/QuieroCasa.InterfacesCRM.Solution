@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IncidentsContacts.cs" />
     <Compile Include="IncomingCall.cs" />
     <Compile Include="OutgoingCall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

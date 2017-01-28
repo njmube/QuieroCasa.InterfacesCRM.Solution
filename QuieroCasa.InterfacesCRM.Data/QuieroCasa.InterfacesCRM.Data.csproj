@@ -45,8 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\CarritoDTO.cs" />
     <Compile Include="Entities\ContactDTO.cs" />
+    <Compile Include="Entities\DesarrolloDTO.cs" />
+    <Compile Include="Entities\IncidentDTO.cs" />
     <Compile Include="Entities\Options.cs" />
+    <Compile Include="Entities\PaqueteDTO.cs" />
+    <Compile Include="Entities\PostVentaDTO.cs" />
+    <Compile Include="Entities\ResponseIncidentsContacts.cs" />
     <Compile Include="Entities\ResponseIncomingCall.cs" />
     <Compile Include="Entities\ResponseOutgoingCall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

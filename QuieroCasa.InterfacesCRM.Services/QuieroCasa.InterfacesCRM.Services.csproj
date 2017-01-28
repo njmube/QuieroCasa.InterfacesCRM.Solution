@@ -87,6 +87,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Incidents.asmx" />
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\QuieroCasaReleases.pubxml" />
     <None Include="Web.Debug.config">
@@ -104,6 +105,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Incidents.asmx.cs">
+      <DependentUpon>Incidents.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="IncomingCall.asmx.cs">
       <DependentUpon>IncomingCall.asmx</DependentUpon>
       <SubType>Component</SubType>

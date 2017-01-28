@@ -72,10 +72,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarritoManagement.cs" />
     <Compile Include="ConnectionsManagement.cs" />
     <Compile Include="ContactsManagement.cs" />
+    <Compile Include="DesarrollosManagement.cs" />
     <Compile Include="IncidentsManagement.cs" />
+    <Compile Include="LogErroresManagement.cs" />
+    <Compile Include="PaquetesManagement.cs" />
     <Compile Include="PhoneCallsManagement.cs" />
+    <Compile Include="PostVentaManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
