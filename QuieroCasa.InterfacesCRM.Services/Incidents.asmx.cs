@@ -24,10 +24,10 @@ namespace QuieroCasa.InterfacesCRM.Services
         QuieroCasa.InterfacesCRM.Business.IncidentsContacts incidents = new QuieroCasa.InterfacesCRM.Business.IncidentsContacts();
 
         [WebMethod]
-        public ResponseIncidentsContacts RegisterIncidentContact(string nombres, string apPaterno, string apMaterno, DateTime fechaNacimiento, string correo, string telefono, int tipoSolicitud, string desarrollo, string comentarios
-            ,bool? sala, bool? comedor, bool? cocina, bool? patioServicio, bool? bano, bool? recamara, bool? cajonEstacionamiento, bool? bodega, bool? areasComunes, bool? otro, string especificar)
+        public ResponseIncidentsContacts RegisterIncidentContact(string nombres, string apPaterno, string apMaterno, DateTime? fechaNacimiento, string correo, string telefono, int tipoSolicitud, string desarrollo, string comentarios
+            ,bool? sala, bool? comedor, bool? cocina, bool? patioServicio, bool? bano, bool? recamara, bool? cajonEstacionamiento, bool? bodega, bool? areasComunes, bool? otro, string especificar, bool? esCliente)
         {
-            return incidents.RegisterIncidentContact(nombres, apPaterno, apMaterno, fechaNacimiento, correo, telefono, tipoSolicitud, desarrollo, comentarios, sala, comedor, cocina, patioServicio, bano,  recamara,  cajonEstacionamiento,  bodega,  areasComunes,  otro, especificar);
+            return incidents.RegisterIncidentContact(nombres, apPaterno, apMaterno, fechaNacimiento, correo, telefono, tipoSolicitud, desarrollo, comentarios, sala, comedor, cocina, patioServicio, bano,  recamara,  cajonEstacionamiento,  bodega,  areasComunes,  otro, especificar, esCliente);
         }
     }
 }

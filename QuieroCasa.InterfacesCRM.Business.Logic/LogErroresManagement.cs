@@ -25,19 +25,33 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
             {
                 Entity logErrores = new Entity("its_logerrorespw");
                 logErrores["its_fechayhoradeerror"] = DateTime.Now;
-                logErrores["its_name"] = mensajeError;
+
+                if (mensajeError.Length > 350)
+                    logErrores["its_name"] = mensajeError.Substring(0, 259);
+                else
+                    logErrores["its_name"] = mensajeError;
+
                 logErrores["its_nombrepersona"] = persona;
                 logErrores["its_correoelectronico"] = its_correoelectronico;
                 logErrores["its_telefono"] = telefono;
 
-                EntityReference area = new EntityReference("qc_area", new Guid(its_area));
-                logErrores["its_area"] = area;
+                if (!string.IsNullOrEmpty(its_area))
+                {
+                    EntityReference area = new EntityReference("qc_area", new Guid(its_area));
+                    logErrores["its_area"] = area;
+                }
 
-                EntityReference paquete = new EntityReference("qc_paquetes", new Guid(its_paquete));
-                logErrores["its_paquete"] = paquete;
+                if (!string.IsNullOrEmpty(its_paquete))
+                {
+                    EntityReference paquete = new EntityReference("qc_paquetes", new Guid(its_paquete));
+                    logErrores["its_paquete"] = paquete;
+                }
 
-                EntityReference desarrollo = new EntityReference("qc_desarrollos", new Guid(its_desarrollo));
-                logErrores["its_desarrollo"] = desarrollo;
+                if (!string.IsNullOrEmpty(its_desarrollo))
+                {
+                    EntityReference desarrollo = new EntityReference("qc_desarrollos", new Guid(its_desarrollo));
+                    logErrores["its_desarrollo"] = desarrollo;
+                }  
 
                 organizationServiceProxy.Create(logErrores);
             }

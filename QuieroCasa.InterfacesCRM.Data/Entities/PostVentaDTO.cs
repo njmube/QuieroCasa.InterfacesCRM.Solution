@@ -18,5 +18,6 @@ namespace QuieroCasa.InterfacesCRM.Data.Entities
         public string qc_name { get; set; }
         public string qc_postventaId { get; set; }
         public string qc_contactoid { get; set; }
+        public string qc_paquetesid { get; set; }
     }
 }

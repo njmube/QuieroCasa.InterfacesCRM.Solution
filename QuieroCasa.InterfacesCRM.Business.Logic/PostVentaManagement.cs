@@ -20,22 +20,25 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
     {
         static readonly NLogWriter log = HostLogger.Get<ContactsManagement>();
 
-        public PostVentaDTO SearchByName(IOrganizationService organizationServiceProxy, string qc_name)
+        public PostVentaDTO SearchByName(IOrganizationService organizationServiceProxy, string qc_paquetesid)
         {
             try
             {
                 PostVentaDTO postVenta = null;
 
+                PaquetesManagement pqMgn = new PaquetesManagement();
+                PaqueteDTO paquete = pqMgn.SearchByName(organizationServiceProxy, qc_paquetesid);
+
                 QueryExpression sdkPostVentaQuery = new QueryExpression
                 {
                     EntityName = "qc_postventa",
-                    ColumnSet = new ColumnSet("qc_postventaid", "qc_contactoid"),
+                    ColumnSet = new ColumnSet("qc_postventaid", "qc_contactoid", "qc_name"),
                     Criteria = new FilterExpression()
                     {
                         FilterOperator = LogicalOperator.Or,
                         Conditions =
                             {
-                                new ConditionExpression("qc_name", ConditionOperator.Equal, qc_name)
+                                new ConditionExpression("qc_paquetesid", ConditionOperator.Equal, new Guid(paquete.qc_paquetesid))
                             }
                     }
                 };
@@ -46,9 +49,10 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
                 {
                     postVenta = new PostVentaDTO()
                     {
-                        qc_name = qc_name,
+                        qc_paquetesid = qc_paquetesid,
                         qc_postventaId = postVentaCollections[0].Attributes.Contains("qc_postventaid") ? postVentaCollections[0].Attributes["qc_postventaid"].ToString() : string.Empty,
-                        qc_contactoid = postVentaCollections[0].Attributes.Contains("qc_contactoid") ? ((EntityReference)postVentaCollections[0].Attributes["qc_contactoid"]).Id.ToString() : string.Empty
+                        qc_contactoid = postVentaCollections[0].Attributes.Contains("qc_contactoid") ? ((EntityReference)postVentaCollections[0].Attributes["qc_contactoid"]).Id.ToString() : string.Empty,
+                        qc_name = postVentaCollections[0].Attributes.Contains("qc_name") ? postVentaCollections[0].Attributes["qc_name"].ToString() : string.Empty
                     };
                 }
 
@@ -56,7 +60,7 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
             }
             catch (Exception ex)
             {
-                log.Error(string.Format("Error en la busqueda de postVenta con el qc_name {0} con el siguiente mensaje: {1}", qc_name, ExceptionHelper.GetErrorMessage(ex, false)), ex);
+                log.Error(string.Format("Error en la busqueda de postVenta con el qc_paquetesid {0} con el siguiente mensaje: {1}", qc_paquetesid, ExceptionHelper.GetErrorMessage(ex, false)), ex);
                 throw ex;
             }
         }

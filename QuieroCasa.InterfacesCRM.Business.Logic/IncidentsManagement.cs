@@ -12,6 +12,7 @@ using Microsoft.Xrm.Sdk.Query;
 using QuieroCasa.InterfacesCRM.Data.Entities;
 using QuieroCasa.InterfacesCRM.Business.Commons.Logs;
 using QuieroCasa.InterfacesCRM.Business.Commons.Exceptions;
+using System.Configuration;
 
 namespace QuieroCasa.InterfacesCRM.Business.Logic
 {
@@ -77,15 +78,17 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
             }
         }
         public string Add(IOrganizationService organizationServiceProxy, string contactId, string its_personanoidentificada, string its_correoelectronico, string its_personaidentificada, string area, string telefono, int? contactosIdentificados, string its_paquete, string desarrollo, string qc_personaidentificadaporvivienda, string qc_personaidentificadaportelefono, string its_postventa, string comentarios
-            , bool? sala, bool? comedor, bool? cocina, bool? patioServicio, bool? bano, bool? recamara, bool? cajonEstacionamiento, bool? bodega, bool? areasComunes, bool? otro, string especificar)
+            , bool? sala, bool? comedor, bool? cocina, bool? patioServicio, bool? bano, bool? recamara, bool? cajonEstacionamiento, bool? bodega, bool? areasComunes, bool? otro, string especificar, DateTime? fechaNacimiento, bool? esCliente)
         {
             try
             {
                 List<ContactDTO> listContacts = new List<ContactDTO>();
 
+                string title = ConfigurationManager.AppSettings["title"].ToString();
+
                 Incident newCase = new Incident()
                 {
-                    Title = "Incidente desde página de contacto",
+                    Title = title,
                     PriorityCode = new OptionSetValue(1),
                     CaseOriginCode = new OptionSetValue(3),
                     CaseTypeCode = new OptionSetValue(3),
@@ -112,7 +115,10 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
                     its_bodega = bodega,
                     its_areascomunes = areasComunes,
                     its_otro = otro,
-                    its_otrafallaareportar = especificar
+                    its_otrafallaareportar = especificar,
+                    qc_fechanacimientoidentificado = fechaNacimiento,
+                    qc_escliente = esCliente,
+                    its_desarrollo = string.IsNullOrEmpty(desarrollo) ? null : new EntityReference("qc_desarrollos", new Guid(desarrollo)),
                 };
 
                 Guid incidentId = organizationServiceProxy.Create(newCase);
