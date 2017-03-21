@@ -26,7 +26,7 @@ namespace QuieroCasa.InterfacesCRM.Business
     {
         static readonly NLogWriter log = HostLogger.Get<IncomingCall>();
 
-        public ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime dateTimeStart, string username, string callId, string urlNimbus, string dialedNumber)
+        public ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime? dateTimeStart, string username, string callId, string urlNimbus, string dialedNumber, string urlRecording)
         {
             StringBuilder sbLog = new StringBuilder();
             ResponseIncomingCall response = new ResponseIncomingCall();
@@ -75,21 +75,42 @@ namespace QuieroCasa.InterfacesCRM.Business
                     typeInputCall = (int)TypeCall.Celular;
                 }
 
-                response.caseId = incidents.Add(organization, "Caso Nimbus del Agente " + username, (int)PriorityCode.Alta, (int)CaseOriginCode.Telefono, (int)CaseTypeCode.Pregunta, urlNimbus, contactId, area, dateTimeStart, callerId, dateTimeStart.ToString("HH:mm:ss"), (int) CaseCreatedBy.LlamadaAtendida, response.ListContacts.Count, callId, identifiedPersonId, typeInputCall);
+                if (!string.IsNullOrEmpty(urlNimbus))
+                {
+                    urlNimbus = StringHelper.DecodeUrlString(urlNimbus);
+                }
+
+                if (!string.IsNullOrEmpty(urlRecording))
+                {
+                    urlRecording = StringHelper.DecodeUrlString(urlRecording);
+                }
+
+                int casoCreadoPor = 0;
+
+                if (string.IsNullOrEmpty(urlNimbus) && string.IsNullOrEmpty(username))
+                {
+                    casoCreadoPor = (int)CaseCreatedBy.LlamadadeBuzon;
+                }
+                else
+                {
+                    casoCreadoPor = (int)CaseCreatedBy.LlamadaAtendida;
+                }
+
+                response.caseId = incidents.Add(organization, username, (int)PriorityCode.Alta, (int)CaseOriginCode.Telefono, (int)CaseTypeCode.Pregunta, urlNimbus, contactId, area, dateTimeStart, callerId, dateTimeStart.HasValue ? dateTimeStart.Value.ToString("HH:mm:ss") : null, casoCreadoPor, response.ListContacts.Count, callId, identifiedPersonId, typeInputCall, urlRecording);
                 response.urlCase = string.Format(StringHelper.GetURLConnectionString(ConfigurationManager.ConnectionStrings["CRMOnline"].ConnectionString) + "/main.aspx?etn=incident&pagetype=entityrecord&id=%7b{0}%7d", response.caseId);
                 response.codError = 0;
                 response.error = string.Empty;
                 response.success = true;
                 response.message = "Caso creado exitosamente";
 
-                sbLog.AppendFormat("Caso creado exitosamente con el CaseId {0} para el Contacto {1} con un total de {2} coincidencias encontradas. URL generada: {3} con los parametros de entrada callerId: {4}, dateTimeStart: {5}, username: {6}, callId: {7}, urlNimbus: {8}, dialedNumber: {9} \n", response.caseId, contactId, response.ListContacts.Count, response.urlCase, callerId, dateTimeStart, username, callId, urlNimbus, dialedNumber);
+                sbLog.AppendFormat("Caso creado exitosamente con el CaseId {0} para el Contacto {1} con un total de {2} coincidencias encontradas. URL generada: {3} con los parametros de entrada callerId: {4}, dateTimeStart: {5}, username: {6}, callId: {7}, urlNimbus: {8}, dialedNumber: {9}, urlRecording: {10} \n", response.caseId, contactId, response.ListContacts.Count, response.urlCase, callerId, dateTimeStart, username, callId, urlNimbus, dialedNumber, urlRecording);
 
                 log.Info(sbLog.ToString());
             }
             catch (Exception ex)
             {
                 sbLog = new StringBuilder();
-                sbLog.AppendFormat("Error en el registro de la llamada de Nimbus con el siguiente mensaje: {0} con los parametros de entrada callerId: {1}, dateTimeStart: {2}, username: {3}, callId: {4}, urlNimbus: {5}, dialedNumber: {6} \n", ExceptionHelper.GetErrorMessage(ex, false), callerId, dateTimeStart, username, callId, urlNimbus, dialedNumber);
+                sbLog.AppendFormat("Error en el registro de la llamada de Nimbus con el siguiente mensaje: {0} con los parametros de entrada callerId: {1}, dateTimeStart: {2}, username: {3}, callId: {4}, urlNimbus: {5}, dialedNumber: {6}, urlRecording {7} \n", ExceptionHelper.GetErrorMessage(ex, false), callerId, dateTimeStart, username, callId, urlNimbus, dialedNumber, urlRecording);
 
                 log.Error(sbLog.ToString(), ex);
 

@@ -173,6 +173,11 @@ namespace QuieroCasa.InterfacesCRM.Business
                     especificar = string.Empty;
                 }
 
+                if (tipoSolicitud == 2)
+                {
+                    esCliente = true;
+                }
+
                 sbTrace.AppendLine(string.Format("5. Registrando información del Incidente para el area {0}", area));
 
                 response.caseId = incidents.Add(organization, contactId, nombres + " " + apPaterno + " " + apMaterno, correo, its_personaidentificada, area, telefono, response.ListContacts.Count, paqueteId, desa.qc_desarrollosid, qc_personaidentificadaporvivienda, qc_personaidentificadaportelefono, postVentaId, comentarios

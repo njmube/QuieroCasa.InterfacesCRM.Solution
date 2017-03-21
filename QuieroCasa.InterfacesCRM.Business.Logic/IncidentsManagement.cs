@@ -20,31 +20,32 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
     {
         static readonly NLogWriter log = HostLogger.Get<ContactsManagement>();
 
-        public string Add(IOrganizationService organizationServiceProxy, string title, int priorityCode, int caseOriginCode, int caseTypeCode, string description
-            , string contactId, string area, DateTime dateTimeStart, string callerId, string timeStart, int caseCreatedBy, int identifiedContacts
-            , string callId, string identifiedPersonId, int typeCall)
+        public string Add(IOrganizationService organizationServiceProxy, string usernameNimbus, int priorityCode, int caseOriginCode, int caseTypeCode, string urlNimbus
+            , string contactId, string area, DateTime? dateTimeStart, string callerId, string timeStart, int caseCreatedBy, int identifiedContacts
+            , string callId, string identifiedPersonId, int typeCall, string urlRecording)
         {
             try
             {
                 List<ContactDTO> listContacts = new List<ContactDTO>();
 
                 Incident newCase = new Incident()
-                {
-                    Title = title,
+                {   
                     PriorityCode = new OptionSetValue(priorityCode),
                     CaseOriginCode = new OptionSetValue(caseOriginCode),
                     CaseTypeCode = new OptionSetValue(caseTypeCode),
-                    Description = description,
-                    CustomerId = new EntityReference(Contact.EntityLogicalName, new Guid(contactId)),
-                    qc_areadepartamento = new EntityReference("qc_area", new Guid(area)),
+                    its_urldegrabacion = string.IsNullOrEmpty(urlNimbus) ? null : urlNimbus,
+                    CustomerId = string.IsNullOrEmpty(contactId) ? null : new EntityReference(Contact.EntityLogicalName, new Guid(contactId)),
+                    qc_areadepartamento = string.IsNullOrEmpty(area) ? null : new EntityReference("qc_area", new Guid(area)),
                     its_fechayhoradeinicio = dateTimeStart,
                     its_telefono = callerId,
                     its_horadeinicio = timeStart,
                     its_casocreadopor = new OptionSetValue(caseCreatedBy),
                     its_iddelallamada = callId,
                     its_contactosidentificados = identifiedContacts,
-                    its_personaidentificada = string.IsNullOrEmpty(identifiedPersonId) ? null : new EntityReference(Contact.EntityLogicalName, new Guid(identifiedPersonId)),
-                    its_tipodellamada = new OptionSetValue(typeCall)
+                    qc_personaidentificadaportelefono = string.IsNullOrEmpty(identifiedPersonId) ? null : new EntityReference(Contact.EntityLogicalName, new Guid(identifiedPersonId)),
+                    its_tipodellamada = new OptionSetValue(typeCall),
+                    qc_usuarionimbus = string.IsNullOrEmpty(usernameNimbus) ? null : usernameNimbus,
+                    qc_urldegrabacion = string.IsNullOrEmpty(urlRecording) ? null : urlRecording
                 };
 
                 Guid incidentId = organizationServiceProxy.Create(newCase);
@@ -63,7 +64,7 @@ namespace QuieroCasa.InterfacesCRM.Business.Logic
                 Incident updateCase = new Incident()
                 {
                     IncidentId = new Guid(caseId),
-                    its_urldegrabacion = urlRecording,
+                    qc_urldegrabacion = urlRecording,
                     its_fechayhoradecierre = dateTimeClosing,
                     its_horadecierre = timeEnd
                 };

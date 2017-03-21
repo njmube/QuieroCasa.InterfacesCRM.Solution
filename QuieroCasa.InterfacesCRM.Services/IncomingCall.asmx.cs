@@ -24,9 +24,9 @@ namespace QuieroCasa.InterfacesCRM.Services
         QuieroCasa.InterfacesCRM.Business.IncomingCall callIn = new QuieroCasa.InterfacesCRM.Business.IncomingCall();
 
         [WebMethod]
-        public ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime dateTimeStart, string username, string callId, string urlNimbus, string dialedNumber)
+        public ResponseIncomingCall RegisterIncomingCall(string callerId, int typeCall, DateTime? dateTimeStart, string username, string callId, string urlNimbus, string dialedNumber, string urlRecording)
         {
-            return callIn.RegisterIncomingCall(callerId, typeCall, dateTimeStart, username, callId, urlNimbus, dialedNumber);
+            return callIn.RegisterIncomingCall(callerId, typeCall, dateTimeStart, username, callId, urlNimbus, dialedNumber, urlRecording);
         }
         [WebMethod]
         public ResponseIncomingCall UpdateIncomingCall(string caseId, DateTime dateTimeClosing, string urlRecording)

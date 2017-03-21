@@ -42,5 +42,12 @@ namespace QuieroCasa.InterfacesCRM.Business.Commons.Utils
                 throw ex;
             }
         }
+        public static string DecodeUrlString(string url)
+        {
+            string newUrl;
+            while ((newUrl = Uri.UnescapeDataString(url)) != url)
+                url = newUrl;
+            return newUrl;
+        }
     }
 }
